@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Alok's Blog]]></title><description><![CDATA[My GSOC 2016 weblog.]]></description><link>http://localhost:2368/</link><generator>Ghost 0.8</generator><lastBuildDate>Thu, 19 May 2016 14:25:25 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Important RFC's]]></title><description><![CDATA[<h1 id="rfcs">RFC's</h1>
+
+<p>SIP <a href="https://www.ietf.org/rfc/rfc3261.txt">RFC</a></p>
+
+<p>SIP file transfer mechnaism. <a href="https://tools.ietf.org/html/rfc5547">SDP</a></p>
+
+<p>SIP Extension for Instant Messaging <a href="https://www.ietf.org/rfc/rfc3428.txt">IM</a></p>
+
+<p>Transport Layer Security <a href="https://www.ietf.org/rfc/rfc5246.txt">TLS</a></p>
+
+<p>Session Traversal Utilities for NAT <a href="https://tools.ietf.org/html/rfc5389">STUN</a></p>
+
+<p>Traversal Using Relays around NAT <a href="https://tools.ietf.org/html/rfc5766">TURN</a></p>
+
+<p>Network Address Translator (NAT) Traversal for Offer/Answer Protocols <br>
+Interactive Connectivity Establishment <a href="https://tools.ietf.org/html/rfc5245">ICE</a></p>
+
+<p>Universal Plug and Play <a href="https://tools.ietf.org/html/rfc6970">UPnP</a></p>
+
+<p>Multipurpose Internet</p>]]></description><link>http://localhost:2368/important-rfcs/</link><guid isPermaLink="false">6862e5f9-7df0-49e9-bc7f-216010cec1fe</guid><dc:creator><![CDATA[Alok Anand]]></dc:creator><pubDate>Thu, 19 May 2016 14:09:00 GMT</pubDate><content:encoded><![CDATA[<h1 id="rfcs">RFC's</h1>
+
+<p>SIP <a href="https://www.ietf.org/rfc/rfc3261.txt">RFC</a></p>
+
+<p>SIP file transfer mechnaism. <a href="https://tools.ietf.org/html/rfc5547">SDP</a></p>
+
+<p>SIP Extension for Instant Messaging <a href="https://www.ietf.org/rfc/rfc3428.txt">IM</a></p>
+
+<p>Transport Layer Security <a href="https://www.ietf.org/rfc/rfc5246.txt">TLS</a></p>
+
+<p>Session Traversal Utilities for NAT <a href="https://tools.ietf.org/html/rfc5389">STUN</a></p>
+
+<p>Traversal Using Relays around NAT <a href="https://tools.ietf.org/html/rfc5766">TURN</a></p>
+
+<p>Network Address Translator (NAT) Traversal for Offer/Answer Protocols <br>
+Interactive Connectivity Establishment <a href="https://tools.ietf.org/html/rfc5245">ICE</a></p>
+
+<p>Universal Plug and Play <a href="https://tools.ietf.org/html/rfc6970">UPnP</a></p>
+
+<p>Multipurpose Internet Mail Extensions <a href="https://tools.ietf.org/html/rfc2045">MIME</a></p>
+
+<p>Transport Protocol for Real-Time Applications <br>
+<a href="https://www.ietf.org/rfc/rfc3550.txt">RTP</a></p>
+
+<p>Security Descriptions for Media Streams <br>
+ Session Description Protocol <a href="https://tools.ietf.org/html/rfc4568">SDP</a></p>]]></content:encoded></item><item><title><![CDATA[Understanding D-Bus]]></title><description><![CDATA[<h1 id="dbus">D-Bus</h1>
+
+<ul>
+<li>D-Bus is an IPC and RPC mechanism.</li>
+<li>Analogy of mesh and bus network.</li>
+<li>It is a daemon (system and session) that allows communication between processes.</li>
+<li>It was made to unify and replace IPC mechanism's of different desktop environments.</li>
+<li>D-Bus is enabled automatically when using systemd because dbus is a</li></ul>]]></description><link>http://localhost:2368/understanding-d-bus/</link><guid isPermaLink="false">c7d9e369-84d6-4980-85d3-e1f78f2affe1</guid><dc:creator><![CDATA[Alok Anand]]></dc:creator><pubDate>Thu, 19 May 2016 14:07:56 GMT</pubDate><content:encoded><![CDATA[<h1 id="dbus">D-Bus</h1>
+
+<ul>
+<li>D-Bus is an IPC and RPC mechanism.</li>
+<li>Analogy of mesh and bus network.</li>
+<li>It is a daemon (system and session) that allows communication between processes.</li>
+<li>It was made to unify and replace IPC mechanism's of different desktop environments.</li>
+<li>D-Bus is enabled automatically when using systemd because dbus is a dependency of systemd.</li>
+<li>There are several implementations of D-Bus specifications (GDbus,QtDBus,sd-bus).</li>
+<li><a href="https://wiki.gnome.org/action/show/Apps/DFeet?action=show&amp;redirect=DFeet">D-feet</a> is an easy to use D-Bus debugger GUI tool.</li>
+</ul>
+
+<h2 id="overviewofdbus">Overview of D-Bus</h2>
+
+<h3 id="client">Client</h3>
+
+<ul>
+<li>Every connection to a bus is identified in the context of D-Bus by what is called a bus name.</li>
+<li>On connection the bus assigns to the connection a special bus name called <em>unique immutable</em> connection name.</li>
+</ul>
+
+<h3 id="services">Services</h3>
+
+<ul>
+<li>In D-Bus, a process offers its services by exposing objects.</li>
+<li>Each object is identified by an object path ex:-  /org/freedesktop/Telepathy/ConnectionManager/<name></name></li>
+<li>These objects have methods that can be invoked, and signals that the object can emit.</li>
+<li>Methods and signals are collectively referred as the <strong>members</strong> of the object.</li>
+<li>Each object cannot be separated from the bus connection from which it was exported.</li>
+</ul>
+
+<h3 id="communication">Communication</h3>
+
+<ul>
+<li>To use a certain service, a client must indicate the <em>object path</em> providing the desired service and the <em>bus name</em> under which the service process is connected to the bus.</li>
+<li>A process connected to a D-Bus bus can request it to export as many D-Bus objects as it wants.</li>
+<li>Members that can be used with an object are specified by an <strong>interface</strong>.</li>
+<li>Any client connected to the bus can interact with an object by using its methods, making requests or commanding the object to perform actions.</li>
+<li>A client can also listen to signals that an object emits when its state changes due to certain events, usually related to the underlying service. D-Bus only passes signals to those processes with a registered interest in them.</li>
+</ul>
+
+<h3 id="code">Code</h3>
+
+<h4 id="viewingservices">Viewing services</h4>
+
+<ol>
+<li>In the shell use</li>
+</ol>
+
+<pre><code class="language-shell">dbus-send --system            \  
+  --dest=org.freedesktop.DBus \
+  --type=method_call          \
+  --print-reply               \
+  /org/freedesktop/DBus       \
+  org.freedesktop.DBus.ListNames
+</code></pre>
+
+<p>to view system services and  </p>
+
+<pre><code class="language-shell">dbus-send --session           \  
+  --dest=org.freedesktop.DBus \
+  --type=method_call          \
+  --print-reply               \
+  /org/freedesktop/DBus       \
+  org.freedesktop.DBus.ListNames
+</code></pre>
+
+<ol>
+<li>Using python system services:  </li>
+</ol>
+
+<pre><code class="language-python">import dbus  
+for service in dbus.SystemBus().list_names():  
+    print(service)
+</code></pre>
+
+<p>Session services:  </p>
+
+<pre><code class="language-python">import dbus  
+for service in dbus.SessionBus().list_names():  
+    print(service)
+</code></pre>]]></content:encoded></item></channel></rss>

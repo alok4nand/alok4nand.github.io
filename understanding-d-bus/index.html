@@ -1,0 +1,340 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Understanding D-Bus — Alok's Blog</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css?v=b16b638bc5">
+
+<!-- For speed, I’ve added the response from this link straight into defer.css-->
+<!--<link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Serif+Pro:400,700/Source+Sans+Pro:400,900,400i,900i/Alegreya:400i,700i">-->
+
+    <link rel="canonical" href="http://localhost:2368/understanding-d-bus/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="Alok's Blog">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Understanding D-Bus">
+    <meta property="og:description" content="D-Bus D-Bus is an IPC and RPC mechanism. Analogy of mesh and bus network. It is a daemon (system and session) that allows communication between processes. It was made to unify and replace IPC mechanism's of different desktop environments. D-Bus is enabled automatically when using systemd because dbus is a">
+    <meta property="og:url" content="http://localhost:2368/understanding-d-bus/">
+    <meta property="article:published_time" content="2016-05-19T14:07:56.952Z">
+    <meta property="article:modified_time" content="2016-05-19T14:07:56.948Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Understanding D-Bus">
+    <meta name="twitter:description" content="D-Bus D-Bus is an IPC and RPC mechanism. Analogy of mesh and bus network. It is a daemon (system and session) that allows communication between processes. It was made to unify and replace IPC mechanism's of different desktop environments. D-Bus is enabled automatically when using systemd because dbus is a">
+    <meta name="twitter:url" content="http://localhost:2368/understanding-d-bus/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Alok Anand">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Alok&#x27;s Blog",
+        "logo": "http://localhost:2368/ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Alok Anand",
+        "url": "http://localhost:2368/author/alok/",
+        "sameAs": []
+    },
+    "headline": "Understanding D-Bus",
+    "url": "http://localhost:2368/understanding-d-bus/",
+    "datePublished": "2016-05-19T14:07:56.952Z",
+    "dateModified": "2016-05-19T14:07:56.948Z",
+    "description": "D-Bus D-Bus is an IPC and RPC mechanism. Analogy of mesh and bus network. It is a daemon (system and session) that allows communication between processes. It was made to unify and replace IPC mechanism&#x27;s of different desktop environments. D-Bus is enabled automatically when using systemd because dbus is a"
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.8">
+    <link rel="alternate" type="application/rss+xml" title="Alok's Blog" href="http://localhost:2368/rss/">
+</head>
+<body class="post-template" id="body">
+
+    
+
+<div class="main-header--content main-nav--content clearfix">
+  <a href="http://localhost:2368">
+    <h3><span class="back-arrow">← </span>Alok's Blog</h3>
+  </a>
+</div>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title typl8-gamma">Understanding D-Bus</h1>
+            <section class="post-meta">
+                By <a href="../author/alok/">Alok Anand</a>
+                <time class="post-date" datetime="2016-05-19"> May 19th 2016</time>
+                <span class="post-tags"></span>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <h1 id="dbus">D-Bus</h1>
+
+<ul>
+<li>D-Bus is an IPC and RPC mechanism.</li>
+<li>Analogy of mesh and bus network.</li>
+<li>It is a daemon (system and session) that allows communication between processes.</li>
+<li>It was made to unify and replace IPC mechanism's of different desktop environments.</li>
+<li>D-Bus is enabled automatically when using systemd because dbus is a dependency of systemd.</li>
+<li>There are several implementations of D-Bus specifications (GDbus,QtDBus,sd-bus).</li>
+<li><a href="https://wiki.gnome.org/action/show/Apps/DFeet?action=show&amp;redirect=DFeet">D-feet</a> is an easy to use D-Bus debugger GUI tool.</li>
+</ul>
+
+<h2 id="overviewofdbus">Overview of D-Bus</h2>
+
+<h3 id="client">Client</h3>
+
+<ul>
+<li>Every connection to a bus is identified in the context of D-Bus by what is called a bus name.</li>
+<li>On connection the bus assigns to the connection a special bus name called <em>unique immutable</em> connection name.</li>
+</ul>
+
+<h3 id="services">Services</h3>
+
+<ul>
+<li>In D-Bus, a process offers its services by exposing objects.</li>
+<li>Each object is identified by an object path ex:-  /org/freedesktop/Telepathy/ConnectionManager/<name></name></li>
+<li>These objects have methods that can be invoked, and signals that the object can emit.</li>
+<li>Methods and signals are collectively referred as the <strong>members</strong> of the object.</li>
+<li>Each object cannot be separated from the bus connection from which it was exported.</li>
+</ul>
+
+<h3 id="communication">Communication</h3>
+
+<ul>
+<li>To use a certain service, a client must indicate the <em>object path</em> providing the desired service and the <em>bus name</em> under which the service process is connected to the bus.</li>
+<li>A process connected to a D-Bus bus can request it to export as many D-Bus objects as it wants.</li>
+<li>Members that can be used with an object are specified by an <strong>interface</strong>.</li>
+<li>Any client connected to the bus can interact with an object by using its methods, making requests or commanding the object to perform actions.</li>
+<li>A client can also listen to signals that an object emits when its state changes due to certain events, usually related to the underlying service. D-Bus only passes signals to those processes with a registered interest in them.</li>
+</ul>
+
+<h3 id="code">Code</h3>
+
+<h4 id="viewingservices">Viewing services</h4>
+
+<ol>
+<li>In the shell use</li>
+</ol>
+
+<pre><code class="language-shell">dbus-send --system            \  
+  --dest=org.freedesktop.DBus \
+  --type=method_call          \
+  --print-reply               \
+  /org/freedesktop/DBus       \
+  org.freedesktop.DBus.ListNames
+</code></pre>
+
+<p>to view system services and  </p>
+
+<pre><code class="language-shell">dbus-send --session           \  
+  --dest=org.freedesktop.DBus \
+  --type=method_call          \
+  --print-reply               \
+  /org/freedesktop/DBus       \
+  org.freedesktop.DBus.ListNames
+</code></pre>
+
+<ol>
+<li>Using python system services:  </li>
+</ol>
+
+<pre><code class="language-python">import dbus  
+for service in dbus.SystemBus().list_names():  
+    print(service)
+</code></pre>
+
+<p>Session services:  </p>
+
+<pre><code class="language-python">import dbus  
+for service in dbus.SessionBus().list_names():  
+    print(service)
+</code></pre>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="../author/alok/">Alok Anand</a></h4>
+
+                    <p>Read <a href="../author/alok/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Understanding%20D-Bus&amp;url=http://localhost:2368/understanding-d-bus/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/understanding-d-bus/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:2368/understanding-d-bus/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+    <!--
+    If you want Disqus comments, uncomment this. Make sure to set your disqus shortname in partials/comments.hbs first!
+     -->
+    </article>
+</main>
+
+
+    <footer class="site-footer">
+      <a class="subscribe icon-feed" href="http://localhost:2368/rss/">
+       <span class="tooltip">Subscribe!</span>
+      </a>
+<!--  Uncomment if you want a copy of your navigation in the footer. It’s pretty cool, and gives your visitors something to do when they finish an article other than commenting, sharing, or closing the tab.    -->
+      <nav role="navigation">
+        <ul class="nav">
+    <li class="nav-home" role="presentation">
+      <a href="http://localhost:2368/">Home</a>
+    </li>
+</ul>
+
+
+      </nav>
+      <section>
+        <span class="print-data copyright-notice">
+          © 2016
+          <a href="http://localhost:2368/">Alok's Blog</a>
+           • 
+        </span>
+
+        <span>
+
+          <a href="http://github.com/curiositry/mnml-ghost-theme">mnml</a>
+          theme by
+          <a href="http://curiositry.github.io">Curiositry</a>
+        </span>
+
+        <span>
+          • 
+         Proudly published with
+          <a href="https://ghost.org"><span class="icon-ghost typl8-zeta"></span><span class="hidden">Ghost</span></a>             </span>
+      </section>
+    </footer>
+
+    <!--
+    This generates a handsome modal menu and hamburger icon. If you want to use it, edit     menu.hbs and add your links (line ~146), then remove the ! from this helper to           activate it.
+    -->
+      <!--
+THE MENU: Enabling this partial creates a hamburger icon that opens a menu. It’s responsive, lightweight, and works with javascript disabled.
+-->
+
+
+<!-- Trigger element, which is hidden -->
+<input type="checkbox" id="menu-trigger">
+
+<!-- Thus label which control the trigger. The hamburger icon is a background image in      the CSS (base64 encoded svg) in main.css. Hover and close states in defer.css-->
+<label for="menu-trigger" id="open-menu" class="open-menu btn"></label>
+
+<!-- The menu that slides in. Styles in defer.css -->
+<nav class="menu" id="menu" role="navigation">
+  <ul class="nav">
+    <li class="nav-home" role="presentation">
+      <a href="http://localhost:2368/">Home</a>
+    </li>
+</ul>
+
+
+</nav>
+
+<!--
+This makes the rest of the page move down with the menu for style points, but is              optional. The menu works fine with pure css.
+-->
+<script>
+  var navTrigger = document.getElementById("menu-trigger");
+  var menu = document.getElementById("menu");
+  var bodyTag = document.getElementsByTagName("body")[0];
+
+
+navTrigger.onclick = function () {
+  if(navTrigger.checked){
+    bodyTag.classList.add("transition-1s");
+    document.getElementsByTagName("body")[0].style.marginTop = menu.clientHeight+"px";
+  }else{
+    bodyTag.classList.add("transition-1s");
+    document.getElementsByTagName("body")[0].style.marginTop = "0";
+  }
+}
+</script>
+
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag -->
+    
+
+    <!--
+    This loads katex.hbs in; if a page has anything with the class .math, katex.hbs           loads Khan Academy’s Tex math typesetting library and runs it on the content.
+
+    If you don’t want to use KaTeX, comment this out.
+    -->
+    <script type="text/javascript">
+var mathAreas = document.getElementsByClassName("math");
+if (mathAreas){
+  var ss = document.createElement("link");
+  ss.type = "text/css";
+  ss.rel = "stylesheet";
+  ss.href = "//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
+  document.getElementsByTagName("head")[0].appendChild(ss);
+
+  var script = document.createElement( 'script' );
+  script.type = 'text/javascript';
+  script.src = '//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js';
+  document.body.appendChild(script);
+
+  window.onload = function() {
+    Array.prototype.forEach.call(
+      document.getElementsByClassName("math"),
+      function(el) {
+        try {
+          katex.render(el.innerHTML, el);
+        } catch (e) { console.log(e); }
+      }
+    );
+  }
+}
+</script>
+
+    <script>
+      var cb = function() {
+        var l = document.createElement('link'); l.rel = 'stylesheet';
+        l.href = '/assets/css/defer.css?v=b16b638bc5';
+        var h = document.getElementsByTagName('head')[0];
+        h.parentNode.insertBefore(l, h);
+      };
+      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+          webkitRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf) raf(cb);
+      else window.addEventListener('load', cb);
+    </script>
+
+    <script async src="../assets/js/index.js?v=b16b638bc5"></script>
+    <script defer src="../assets/js/prism.min.js?v=b16b638bc5"></script>
+
+</body>
